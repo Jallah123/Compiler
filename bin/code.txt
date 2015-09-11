@@ -1,0 +1,6 @@
+x = 3;
+terwijl(x >= 0)
+{
+	afdruk(x);
+	x = x - 1;
+}
