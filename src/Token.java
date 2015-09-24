@@ -2,16 +2,16 @@ public class Token {
 	private int positionInList;
 	private int lineNumber;
 	private int linePosition;
-	private TokenType token;
+	private TokenType tokenType;
 	private String value;
 	private int level;
 	private int partner;
 	
-	public Token(int positionInList, int lineNumber, int linePosition, TokenType token, String value, int level){
+	public Token(int positionInList, int lineNumber, int linePosition, TokenType tokenType, String value, int level){
 		this.positionInList = positionInList;
 		this.lineNumber = lineNumber;
 		this.linePosition = linePosition;
-		this.token = token;
+		this.tokenType = tokenType;
 		this.value = value;
 		this.level = level;
 	}
@@ -55,12 +55,12 @@ public class Token {
 		this.linePosition = linePosition;
 	}
 
-	public TokenType getToken() {
-		return token;
+	public TokenType getTokenType() {
+		return tokenType;
 	}
 
-	public void setToken(TokenType token) {
-		this.token = token;
+	public void setTokenType(TokenType tokenType) {
+		this.tokenType = tokenType;
 	}
 
 	public String getValue() {

@@ -16,7 +16,7 @@ public class CodeParser {
 			tokenizeInput();
 			for (Token t : tokenizer.getTokens()) {
 				System.out.println(
-						t.getPositionInList() + " partner: " + t.getPartner() + " level: " + t.getLevel() + " value: " + t.getValue());
+						t.getPositionInList() + " partner: " + t.getPartner() + " level: " + t.getLevel() + " value: " + t.getValue() + " lineNumber: " + t.getLineNumber() + " linePosition: " + t.getLinePosition());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
