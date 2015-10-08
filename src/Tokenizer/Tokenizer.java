@@ -1,6 +1,9 @@
+package Tokenizer;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import Tokenizer.Token.TokenType;
 
 public class Tokenizer {
 
@@ -16,6 +19,8 @@ public class Tokenizer {
 	private void initTokenInfo() {
 		add("terwijl", Token.TokenType.WHILE);
 		add("afdruk", Token.TokenType.PRINT);
+		add("als", Token.TokenType.IF);
+		add("anders", Token.TokenType.ELSE);
 		add("=", Token.TokenType.EQUALS);
 		add(";", Token.TokenType.SEMICOLON);
 		add(">=", Token.TokenType.GREATEREQUALS);

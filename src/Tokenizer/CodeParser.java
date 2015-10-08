@@ -1,3 +1,4 @@
+package Tokenizer;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -22,6 +23,7 @@ public class CodeParser {
 			e.printStackTrace();
 		}
 	}
+	
 	private void tokenizeInput(){
 		try {
 			tokenizer.tokenize(input);

@@ -1,3 +1,4 @@
+package Tokenizer;
 public class Token {
 	private int positionInList;
 	private int lineNumber;
@@ -18,6 +19,8 @@ public class Token {
 	
 	public enum TokenType {
 		IDENTIFIER,
+		IF,
+		ELSE,
 		EQUALS,
 		NUMBER,
 		SEMICOLON,
