@@ -59,8 +59,6 @@ namespace Compiler.Compilers.Compiled
             }
 
             Compiled.Add(lastDN);
-
-
         }
 
         public override bool IsMatch(LinkedListNode<Token> currentToken)
