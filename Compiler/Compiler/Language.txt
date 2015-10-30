@@ -1,0 +1,23 @@
+﻿x = 0 ;
+terwijl ( x < 25 { )
+{
+	x = x + 5 ;
+	print ( "x:" ) ;
+	printlijn ( x ) ;
+}
+als ( x == 25 )
+{
+	
+	x = 75 ;
+
+	printlijn ( x ) ;
+
+}
+
+
+
+
+anders
+{
+	printlijn ( "test" ) ;
+}
