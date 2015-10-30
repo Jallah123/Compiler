@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Compiler.Nodes
 {
@@ -10,7 +6,7 @@ namespace Compiler.Nodes
     {
         public FunctionCallNode()
         {
-            this.Parameters = new List<string>();
+            Parameters = new List<string>();
         }
 
         public override void Accept(NodeVisitor visitor)

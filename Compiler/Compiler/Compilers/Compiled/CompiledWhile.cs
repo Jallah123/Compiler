@@ -1,9 +1,5 @@
 ﻿using Compiler.Nodes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Compiler.Compilers.Compiled
 {
@@ -17,14 +13,25 @@ namespace Compiler.Compilers.Compiled
         public override void Compile()
         {
             DoNothingNode firstDN = new DoNothingNode();
-            DoNothingNode middleDN = new DoNothingNode();
             DoNothingNode lastDN = new DoNothingNode();
 
             Compiled.Add(firstDN);
 
+            compileCondition(lastDN);
+
+            compileStatements();
+
+            Compiled.Add(new JumpNode(firstDN));
+
+            Compiled.Add(lastDN);
+        }
+
+        private void compileCondition(DoNothingNode lastDN)
+        {
+            DoNothingNode middleDN = new DoNothingNode();
             CompiledCondition condition = new CompiledCondition();
 
-            while(CurrentToken.Value.TokenType != TokenType.ELLIPSISOPEN)
+            while (CurrentToken.Value.TokenType != TokenType.ELLIPSISOPEN)
             {
                 CurrentToken = CurrentToken.Next;
             }
@@ -34,14 +41,17 @@ namespace Compiler.Compilers.Compiled
             CurrentToken = condition.CurrentToken;
 
             Compiled.InsertAfter(condition.Compiled);
-            
+
             ConditionalJumpNode jump = new ConditionalJumpNode();
             jump.NextOnTrue = middleDN;
             jump.NextOnFalse = lastDN;
 
             Compiled.Add(jump);
             Compiled.Add(middleDN);
+        }
 
+        private void compileStatements()
+        {
             while (CurrentToken.Value.TokenType != TokenType.BRACKETOPEN)
             {
                 CurrentToken = CurrentToken.Next;
@@ -57,10 +67,6 @@ namespace Compiler.Compilers.Compiled
                 Compiled.InsertAfter(compiled.Compiled);
                 CurrentToken = CurrentToken.Next;
             }
-
-            Compiled.Add(new JumpNode(firstDN));
-
-            Compiled.Add(lastDN);
         }
 
         public override bool IsMatch(LinkedListNode<Token> currentToken)

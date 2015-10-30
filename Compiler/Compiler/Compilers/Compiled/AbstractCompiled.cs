@@ -1,9 +1,5 @@
 ﻿using Compiler.Nodes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Compiler.Compilers.Compiled
 {
@@ -14,8 +10,8 @@ namespace Compiler.Compilers.Compiled
 
         public AbstractCompiled()
         {
-            this.Compiled = new NodeLinkedList();
-            this.Compiled.Add(new DoNothingNode());
+            Compiled = new NodeLinkedList();
+            Compiled.Add(new DoNothingNode());
         }
 
         public abstract void Compile();

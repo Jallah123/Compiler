@@ -1,9 +1,5 @@
 ﻿using Compiler.Nodes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Compiler
 {
@@ -11,9 +7,14 @@ namespace Compiler
     {
         public LinkedList<Token> TokenList { get; set; }
 
+        public Compiler(LinkedList<Token> _TokenList)
+        {
+            TokenList = _TokenList;
+        }
+
         public NodeLinkedList compile()
         {
-            LinkedListNode<Token> currentToken = this.TokenList.First;
+            LinkedListNode<Token> currentToken = TokenList.First;
 
             NodeLinkedList LinkedList = new NodeLinkedList();
             LinkedList.Add(new DoNothingNode());
@@ -28,7 +29,6 @@ namespace Compiler
                 LinkedList.InsertAfter(compiled.Compiled);
             }
            
-            
             return LinkedList;
         }
     }

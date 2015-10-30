@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Compiler.Nodes;
 
 namespace Compiler.Compilers.Compiled
@@ -32,11 +28,11 @@ namespace Compiler.Compilers.Compiled
             }
 
 
-            DirectFunctionCallNode assign = new DirectFunctionCallNode();
-            assign.Parameters.Add("ReturnToVariable");
-            assign.Parameters.Add(Left.Value.Text);
+            DirectFunctionCallNode assignment = new DirectFunctionCallNode();
+            assignment.Parameters.Add("ReturnToVariable");
+            assignment.Parameters.Add(Left.Value.Text);
 
-            this.Compiled.Add(assign);
+            Compiled.Add(assignment);
         }
 
         public override bool IsMatch(LinkedListNode<Token> currentToken)

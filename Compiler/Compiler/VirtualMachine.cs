@@ -2,9 +2,6 @@
 using Compiler.Nodes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Compiler
 {
@@ -18,21 +15,19 @@ namespace Compiler
 
         public VirtualMachine()
         {
-            this.Commands = new Dictionary<string, BaseCommand>();
-            this.Commands.Add("CreateVariable", new CreateVariableCommand());
-            this.Commands.Add("SetReturnValue", new SetReturnValueCommand());
-            this.Commands.Add("VariableToReturn", new SmallerThanCommand());
-            this.Commands.Add("ReturnToVariable", new ReturnToVariableCommand());
-            this.Commands.Add("Print", new PrintCommand());
-            this.Commands.Add("PrintLine", new PrintLineCommand());
-            this.Commands.Add("Equals", new EqualsCommand());
-            this.Commands.Add("Plus", new PlusCommand());
-            this.Commands.Add("SmallerThan", new SmallerThanCommand());
-            this.Commands.Add("ClearTempVariables", new ClearTempVariablesCommand());
+            Commands = new Dictionary<string, BaseCommand>();
+            Commands.Add("CreateVariable", new CreateVariableCommand());
+            Commands.Add("SetReturnValue", new SetReturnValueCommand());
+            Commands.Add("VariableToReturn", new SmallerThanCommand());
+            Commands.Add("ReturnToVariable", new ReturnToVariableCommand());
+            Commands.Add("Print", new PrintCommand());
+            Commands.Add("PrintLine", new PrintLineCommand());
+            Commands.Add("Equals", new EqualsCommand());
+            Commands.Add("Plus", new PlusCommand());
+            Commands.Add("SmallerThan", new SmallerThanCommand());
+            Commands.Add("ClearTempVariables", new ClearTempVariablesCommand());
 
-           
-
-            this.Variables = new Dictionary<string, string>();
+            Variables = new Dictionary<string, string>();
             Variables["$tempPlus"] = "0";
         }
 
@@ -54,7 +49,7 @@ namespace Compiler
                 currentNode.Accept(visitor);
                 currentNode = visitor.NextNode;
 
-                if (this.IsDebug)
+                if (IsDebug)
                 {
                     System.Threading.Thread.Sleep(100);
                 }
@@ -64,7 +59,7 @@ namespace Compiler
 
         public void DebugPrint(string s)
         {
-            if(this.IsDebug)
+            if(IsDebug)
             {
                 Console.WriteLine(s);
             }

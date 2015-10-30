@@ -1,9 +1,5 @@
 ﻿using Compiler.Nodes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Compiler.Compilers.Compiled
 {
@@ -26,9 +22,9 @@ namespace Compiler.Compilers.Compiled
             assign.Parameters.Add(Left.Value.TokenType.ToString());
             assign.Parameters.Add(Right.Value.TokenType.ToString());
 
-            this.CurrentToken = CurrentToken.Next;
+            CurrentToken = CurrentToken.Next;
 
-            this.Compiled.Add(assign);
+            Compiled.Add(assign);
         }
 
         public override bool IsMatch(LinkedListNode<Token> currentToken)

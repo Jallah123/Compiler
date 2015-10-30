@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Compiler.Nodes
 {
     class NextNodeVisitor : NodeVisitor
     {
         private VirtualMachine virtualMachine;
-
-        public NextNodeVisitor(VirtualMachine virtualMachine)
-        {
-            this.virtualMachine = virtualMachine;
-        }
-
         public Node NextNode { get; private set; }
+
+        public NextNodeVisitor(VirtualMachine _virtualMachine)
+        {
+            virtualMachine = _virtualMachine;
+        }
 
         public override void Visit(DoNothingNode node)
         {

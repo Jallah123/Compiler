@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Compiler.Nodes
+﻿namespace Compiler.Nodes
 {
     public class NodeLinkedList
     {
@@ -13,17 +7,17 @@ namespace Compiler.Nodes
 
         public void Add(Node n)
         {
-            if(this.First == null)
+            if(First == null)
             {
-                this.First = n;
-                this.Last = n;
+                First = n;
+                Last = n;
             }
 
-            if(this.Last != null)
+            if(Last != null)
             {
-                this.Last.Next = n;
-                n.Previous = this.Last;
-                this.Last = n;
+                Last.Next = n;
+                n.Previous = Last;
+                Last = n;
             }
         }
 
@@ -31,18 +25,18 @@ namespace Compiler.Nodes
         {
             Node last = list.Last;
 
-            last.Next = this.First;
-            this.First.Previous = last;
-            this.First = list.First;
+            last.Next = First;
+            First.Previous = last;
+            First = list.First;
         }
 
         public void InsertAfter(NodeLinkedList list)
         {
             Node first = list.First;
 
-            first.Previous = this.Last;
+            first.Previous = Last;
             Last.Next = first;
-            this.Last = list.Last;
+            Last = list.Last;
         }
     }
 }

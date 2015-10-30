@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Compiler
 {
@@ -42,62 +40,64 @@ namespace Compiler
 
         public Tokenizer(string[] lines)
         {
-            this.level = 0;
-            this.lineNumber = 1;
-            this.partnerStack = new Stack<Token>();
-            this.stringList = new List<Token>();
-            this.tokenList = new LinkedList<Token>();
+            level = 0;
+            lineNumber = 1;
+            partnerStack = new Stack<Token>();
+            stringList = new List<Token>();
+            tokenList = new LinkedList<Token>();
 
-            this.initMap();
+            initMap();
+            createTokensFromText(lines);
+        }
 
+        private void initMap()
+        {
+            tokensMap = new Dictionary<string, TokenType>();
+
+            tokensMap["="] = TokenType.EQUALS;
+            tokensMap["anders"] = TokenType.ELSE;
+            tokensMap["terwijl"] = TokenType.WHILE;
+            tokensMap["als"] = TokenType.IF;
+            tokensMap[";"] = TokenType.SEMICOLUM;
+            tokensMap[">"] = TokenType.GREATERTHAN;
+            tokensMap["<"] = TokenType.SMALLERTHAN;
+            tokensMap["+"] = TokenType.PLUS;
+            tokensMap["-"] = TokenType.MINUS;
+            tokensMap["{"] = TokenType.BRACKETOPEN;
+            tokensMap["}"] = TokenType.BRACKETCLOSE;
+            tokensMap["("] = TokenType.ELLIPSISOPEN;
+            tokensMap[")"] = TokenType.ELLIPSISCLOSE;
+            tokensMap["\""] = TokenType.STRINGOPENCLOSE;
+            tokensMap["print"] = TokenType.PRINT;
+            tokensMap["printlijn"] = TokenType.PRINTLINE;
+            tokensMap["=="] = TokenType.DOUBLE_EQUALS;
+        }
+        private void createTokensFromText(string[] lines)
+        {
             foreach (string line in lines)
             {
                 string[] tokenIdentifiers = line.Split(' ', '\r', '\n', '\t');
 
-                if(tokenIdentifiers.Length != 0 && !(tokenIdentifiers.Length == 1 && tokenIdentifiers[0] == ""))
+                if (tokenIdentifiers.Length != 0 && !(tokenIdentifiers.Length == 1 && tokenIdentifiers[0] == ""))
                 {
-                    this.createTokens(tokenIdentifiers);
-                    this.lineNumber++;
+                    createTokens(tokenIdentifiers);
+                    lineNumber++;
 
                 }
             }
 
             var currentToken = tokenList.First;
 
-            while(currentToken != null)
+            while (currentToken != null)
             {
                 if (currentToken.Value.TokenType == TokenType.IDENTIFIER && currentToken.Value.Text == "")
                 {
                     currentToken.Value.TokenType = TokenType.ANY;
-                    
+
                 }
                 currentToken = currentToken.Next;
             }
         }
-
-        private void initMap()
-        {
-            this.tokensMap = new Dictionary<string, TokenType>();
-
-            this.tokensMap["="] = TokenType.EQUALS;
-            this.tokensMap["anders"] = TokenType.ELSE;
-            this.tokensMap["terwijl"] = TokenType.WHILE;
-            this.tokensMap["als"] = TokenType.IF;
-            this.tokensMap[";"] = TokenType.SEMICOLUM;
-            this.tokensMap[">"] = TokenType.GREATERTHAN;
-            this.tokensMap["<"] = TokenType.SMALLERTHAN;
-            this.tokensMap["+"] = TokenType.PLUS;
-            this.tokensMap["-"] = TokenType.MINUS;
-            this.tokensMap["{"] = TokenType.BRACKETOPEN;
-            this.tokensMap["}"] = TokenType.BRACKETCLOSE;
-            this.tokensMap["("] = TokenType.ELLIPSISOPEN;
-            this.tokensMap[")"] = TokenType.ELLIPSISCLOSE;
-            this.tokensMap["\""] = TokenType.STRINGOPENCLOSE;
-            this.tokensMap["print"] = TokenType.PRINT;
-            this.tokensMap["printlijn"] = TokenType.PRINTLINE;
-            this.tokensMap["=="] = TokenType.DOUBLE_EQUALS;
-        }
-
         private void createTokens(string[] line)
         {
             foreach(string word in line)
@@ -105,10 +105,10 @@ namespace Compiler
                 Token token = new Token();
                 token.Position = tokenList.Count + 1;
                 token.Text = word;
-                token.Level = this.level;
-                token.LineNumber = this.lineNumber;
+                token.Level = level;
+                token.LineNumber = lineNumber;
 
-                if (!this.tokensMap.ContainsKey(word))
+                if (!tokensMap.ContainsKey(word))
                 {
                     int wordNumeric;
                     bool result = int.TryParse(word, out wordNumeric);
@@ -129,15 +129,15 @@ namespace Compiler
                 }
                 else
                 {
-                    token.TokenType = this.tokensMap[word];
+                    token.TokenType = tokensMap[word];
 
-                    this.handlePartner(token);
+                    handlePartner(token);
 
-                    this.checkCorrectnessPartners(token);
+                    checkCorrectnessPartners(token);
 
 
                 }
-                this.tokenList.AddLast(token);
+                tokenList.AddLast(token);
             }
         }
 
@@ -166,44 +166,44 @@ namespace Compiler
             switch (token.TokenType)
             {
                 case TokenType.BRACKETOPEN:
-                    this.partnerStack.Push(token);
-                    this.level++;
+                    partnerStack.Push(token);
+                    level++;
                     break;
                 case TokenType.BRACKETCLOSE:
-                    if(this.partnerStack.Peek().TokenType == TokenType.BRACKETOPEN)
+                    if(partnerStack.Peek().TokenType == TokenType.BRACKETOPEN)
                     {
-                        this.partnerStack.Pop();
-                        this.level--;                        
+                        partnerStack.Pop();
+                        level--;                        
                     }
                     else
                     {
-                        generateException(this.partnerStack.Peek().TokenType, TokenType.BRACKETOPEN);
+                        generateException(partnerStack.Peek().TokenType, TokenType.BRACKETOPEN);
                     }
                     break;
                 case TokenType.ELLIPSISOPEN:
-                    this.partnerStack.Push(token);
-                    this.level++;
+                    partnerStack.Push(token);
+                    level++;
                     break;
                 case TokenType.ELLIPSISCLOSE:
-                    if (this.partnerStack.Peek().TokenType == TokenType.ELLIPSISOPEN)
+                    if (partnerStack.Peek().TokenType == TokenType.ELLIPSISOPEN)
                     {
-                        this.partnerStack.Pop();
-                        this.level--;
+                        partnerStack.Pop();
+                        level--;
                     } else
                     {
-                        generateException(this.partnerStack.Peek().TokenType, TokenType.ELLIPSISOPEN);
+                        generateException(partnerStack.Peek().TokenType, TokenType.ELLIPSISOPEN);
                     }
                     break;
                 case TokenType.IF:
-                    this.partnerStack.Push(token);
+                    partnerStack.Push(token);
                     break;
                 case TokenType.ELSE:
-                    if (this.partnerStack.Peek().TokenType == TokenType.IF)
+                    if (partnerStack.Peek().TokenType == TokenType.IF)
                     {
-                        this.partnerStack.Pop();
+                        partnerStack.Pop();
                     }else
                     {
-                        generateException(this.partnerStack.Peek().TokenType, TokenType.ELSE);
+                        generateException(partnerStack.Peek().TokenType, TokenType.ELSE);
                     }
                     break;
             }

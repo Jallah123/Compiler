@@ -1,9 +1,5 @@
 ﻿using Compiler.Nodes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Compiler.Compilers.Compiled
 {
@@ -31,7 +27,7 @@ namespace Compiler.Compilers.Compiled
             FunctionCallNode print = new FunctionCallNode();
             print.Parameters.Add("Print");
 
-            this.Compiled.Add(print);
+            Compiled.Add(print);
         }
 
         public override bool IsMatch(LinkedListNode<Token> currentToken)
