@@ -8,7 +8,7 @@ namespace Compiler.Commands
 {
     class VariableToReturnCommand : BaseCommand
     {
-        public override void Execute(VirtualMachine vm, IList<string> parameters)
+        public override void Execute(VirtualMachine vm, List<string> parameters)
         {
             vm.ReturnValue = vm.Variables[parameters[1]];
 

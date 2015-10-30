@@ -1,5 +1,5 @@
 ﻿x = 0 ;
-terwijl ( x < 25 { )
+terwijl ( x < 25 )
 {
 	x = x + 5 ;
 	print ( "x:" ) ;

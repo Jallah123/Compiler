@@ -8,7 +8,7 @@ namespace Compiler.Commands
 {
     class ReturnToVariableCommand : BaseCommand
     {
-        public override void Execute(VirtualMachine vm, IList<string> parameters)
+        public override void Execute(VirtualMachine vm, List<string> parameters)
         {
             if(vm.Variables.ContainsKey(parameters[1]))
             {

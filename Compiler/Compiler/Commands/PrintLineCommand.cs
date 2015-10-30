@@ -8,7 +8,7 @@ namespace Compiler.Commands
 {
     public class PrintLineCommand : BaseCommand
     {
-        public override void Execute(VirtualMachine vm, IList<string> parameters)
+        public override void Execute(VirtualMachine vm, List<string> parameters)
         {
             Console.WriteLine(vm.ReturnValue);
         }

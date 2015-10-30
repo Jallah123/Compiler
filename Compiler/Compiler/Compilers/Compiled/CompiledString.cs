@@ -38,12 +38,7 @@ namespace Compiler.Compilers.Compiled
 
         public override bool IsMatch(LinkedListNode<Token> currentToken)
         {
-            if(currentToken.Value.TokenType == TokenType.STRINGOPENCLOSE)
-            {
-                return true;
-            }
-
-            return false;
+            return currentToken.Value.TokenType == TokenType.STRINGOPENCLOSE;
         }
     }
 }

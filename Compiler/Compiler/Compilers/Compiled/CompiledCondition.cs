@@ -36,12 +36,7 @@ namespace Compiler.Compilers.Compiled
 
         public override bool IsMatch(LinkedListNode<Token> currentToken)
         {
-            if(currentToken.Value.TokenType == TokenType.DOUBLE_EQUALS || currentToken.Value.TokenType == TokenType.SMALLERTHAN)
-            {
-                return true;
-            }
-
-            return false;
+            return currentToken.Value.TokenType == TokenType.DOUBLE_EQUALS || currentToken.Value.TokenType == TokenType.SMALLERTHAN;
         }
     }
 }

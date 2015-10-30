@@ -34,7 +34,7 @@ namespace Compiler
     {
         private Dictionary<string, TokenType> tokensMap;
         
-        private Stack<TokenType> partnerStack;
+        private Stack<Token> partnerStack;
         private int level;
         private int lineNumber;
         public LinkedList<Token> tokenList { get; }
@@ -44,7 +44,7 @@ namespace Compiler
         {
             this.level = 0;
             this.lineNumber = 1;
-            this.partnerStack = new Stack<TokenType>();
+            this.partnerStack = new Stack<Token>();
             this.stringList = new List<Token>();
             this.tokenList = new LinkedList<Token>();
 
@@ -129,11 +129,13 @@ namespace Compiler
                 }
                 else
                 {
-                    this.checkCorrectnessPartners(this.tokensMap[word]);
-                    
                     token.TokenType = this.tokensMap[word];
-                    
-                    // this.handlePartner(token);
+
+                    this.handlePartner(token);
+
+                    this.checkCorrectnessPartners(token);
+
+
                 }
                 this.tokenList.AddLast(token);
             }
@@ -141,57 +143,67 @@ namespace Compiler
 
         private void handlePartner(Token token)
         {
-            switch (token.TokenType) {
-                case TokenType.BRACKETCLOSE:
-
-                    break;
-
+            if (token.TokenType == TokenType.BRACKETCLOSE || token.TokenType == TokenType.ELLIPSISCLOSE || token.TokenType == TokenType.ELSE)
+            {
+                token.Partner = getIndexOfToken(partnerStack.Peek());
             }
         }
 
-        private void checkCorrectnessPartners(TokenType tokenType)
+        private int getIndexOfToken(Token token)
         {
-            switch (tokenType)
+            int index = 0;
+            foreach (var t in tokenList)
+            {
+                if (t == token)
+                    return index;
+                index++;
+            }
+            return -1;
+        }
+
+        private void checkCorrectnessPartners(Token token)
+        {
+            switch (token.TokenType)
             {
                 case TokenType.BRACKETOPEN:
-                    this.partnerStack.Push(tokenType);
+                    this.partnerStack.Push(token);
                     this.level++;
                     break;
                 case TokenType.BRACKETCLOSE:
-                    if(this.partnerStack.Peek() == TokenType.BRACKETOPEN)
+                    if(this.partnerStack.Peek().TokenType == TokenType.BRACKETOPEN)
                     {
                         this.partnerStack.Pop();
                         this.level--;                        
                     }
                     else
                     {
-                        generateException(this.partnerStack.Peek(), TokenType.BRACKETOPEN);
+                        generateException(this.partnerStack.Peek().TokenType, TokenType.BRACKETOPEN);
                     }
                     break;
                 case TokenType.ELLIPSISOPEN:
-                    this.partnerStack.Push(tokenType);
+                    this.partnerStack.Push(token);
                     this.level++;
                     break;
                 case TokenType.ELLIPSISCLOSE:
-                    if (this.partnerStack.Peek() == TokenType.ELLIPSISOPEN)
+                    if (this.partnerStack.Peek().TokenType == TokenType.ELLIPSISOPEN)
                     {
                         this.partnerStack.Pop();
                         this.level--;
                     } else
                     {
-                        generateException(this.partnerStack.Peek(), TokenType.ELLIPSISOPEN);
+                        generateException(this.partnerStack.Peek().TokenType, TokenType.ELLIPSISOPEN);
                     }
                     break;
                 case TokenType.IF:
-                    this.partnerStack.Push(tokenType);
+                    this.partnerStack.Push(token);
                     break;
                 case TokenType.ELSE:
-                    if (this.partnerStack.Peek() == TokenType.IF)
+                    if (this.partnerStack.Peek().TokenType == TokenType.IF)
                     {
                         this.partnerStack.Pop();
                     }else
                     {
-                        generateException(this.partnerStack.Peek(), TokenType.ELSE);
+                        generateException(this.partnerStack.Peek().TokenType, TokenType.ELSE);
                     }
                     break;
             }

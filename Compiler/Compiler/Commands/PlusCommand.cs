@@ -8,7 +8,7 @@ namespace Compiler.Commands
 {
     public class PlusCommand : BaseCommand
     {
-        public override void Execute(VirtualMachine vm, IList<string> parameters)
+        public override void Execute(VirtualMachine vm, List<string> parameters)
         {
             int var1 = 0;
             int var2 = 0;

@@ -8,7 +8,7 @@ namespace Compiler.Commands
 {
     class SetReturnValueCommand : BaseCommand
     {
-        public override void Execute(VirtualMachine vm, IList<string> parameters)
+        public override void Execute(VirtualMachine vm, List<string> parameters)
         {
             if(parameters.Count == 3)
             {

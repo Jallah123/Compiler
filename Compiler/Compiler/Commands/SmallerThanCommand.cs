@@ -8,7 +8,7 @@ namespace Compiler.Commands
 {
     class SmallerThanCommand : BaseCommand
     {
-        public override void Execute(VirtualMachine vm, IList<string> parameters)
+        public override void Execute(VirtualMachine vm, List<string> parameters)
         {
 
             if (Int32.Parse(vm.Variables[parameters[1]]) < Int32.Parse(parameters[2]))

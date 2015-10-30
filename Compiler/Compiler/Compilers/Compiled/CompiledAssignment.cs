@@ -41,14 +41,9 @@ namespace Compiler.Compilers.Compiled
 
         public override bool IsMatch(LinkedListNode<Token> currentToken)
         {
-            if(currentToken.Previous != null
+            return currentToken.Previous != null
                 && currentToken.Previous.Value.TokenType == TokenType.IDENTIFIER
-                    && currentToken.Value.TokenType == TokenType.EQUALS)
-            {
-                return true;
-            }
-            
-            return false;
+                    && currentToken.Value.TokenType == TokenType.EQUALS;
         }
     }
 }
